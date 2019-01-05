@@ -2,15 +2,13 @@
   "name": "alex",
   "version": "1.0.0",
   "description": "Audio level executable XHR",
-  "directories": {
-    "lib": "lib"
-  },
+  "main": "client.js",
   "scripts": {
     "test": "npm run dev",
     "dev": "npm run build && npm run start",
     "start": "npm run start.server | npm run start.client",
     "build": "npm run build.client && npm run build.server",
-    "start.server": "node build/test.server.js",
+    "start.server": "node test.server.js",
     "start.client": "webpack-dev-server --config src/client.config.js --mode development --open",
     "build.client": "webpack --config src/client.config.js --mode production --clean true",
     "build.server": "webpack --config src/server.config.js --mode production --clean false"

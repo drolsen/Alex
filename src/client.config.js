@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const config = {
   target: 'web',
   entry: {
-    'alex.client': './src/client/alex.client.js',
+    'client': './src/client/alex.client.js',
     'test.client' : './test/test.client.js'
   },
   module: {
@@ -34,12 +34,12 @@ const config = {
   	]
   },
   resolve: {
-    extensions: ['.js', '.json', '.css', '.html'], // limit alias to these file types (order matters here; css last)
+    extensions: ['.js', '.json', '.css'], // limit alias to these file types (order matters here; css last)
     enforceExtension: false // allows importing of files without file's extension 
   },  
   output: {
-    //publicPath: '/dist',
-    path: path.resolve(__dirname, '../build'),
+    publicPath: '/',
+    path: path.resolve(__dirname, '../'),
     filename: '[name].js'
   }
 };
