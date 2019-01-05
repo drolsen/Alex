@@ -1,19 +1,24 @@
 const path = require('path');
 const NodeExternals = require('webpack-node-externals');
 
-const config = {
+module.exports = {
   target: "node",
   entry: {
-    'alex.server': './src/server/alex.server.js',
+    'server': './src/server/alex.server.js',
     'test.server' : './test/test.server.js'
   },
   output: {
-    path: path.resolve(__dirname, "../build"),
+    path: path.resolve(__dirname, "../"),
     filename: "[name].js"
   },
   externals: [NodeExternals()],
-};
-
-module.exports = (env, args) => {
-  return config;
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8025',
+        changeOrigin: true,
+        secure: false
+      }
+    }      
+  }  
 };

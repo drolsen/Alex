@@ -70,7 +70,7 @@ class AlexClient {
 
 		// setup new VR listener
 		VoiceRecognition.addCallback('result', (data) => {
-
+			console.log(data);
 			// data is an array of best guesses, we always want the first record of best guesses
 			// we also want to trim away any leading or trailing spaces on the raw data.
 			let input = data[0].toLowerCase().trim();
