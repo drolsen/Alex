@@ -1,0 +1,58 @@
+{
+  "name": "alex",
+  "version": "1.0.0",
+  "description": "Audio level executable XHR",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "npm run dev",
+    "dev": "npm run build && npm run start",
+    "start": "npm run start.server | npm run start.client",
+    "build": "npm run build.client && npm run build.server",
+    "start.server": "node build/test.server.js",
+    "start.client": "webpack-dev-server --config src/client.config.js --mode development --open",
+    "build.client": "webpack --config src/client.config.js --mode production --clean true",
+    "build.server": "webpack --config src/server.config.js --mode production --clean false"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drolsen/alex.git"
+  },
+  "keywords": [
+    "voice",
+    "commands",
+    "voice",
+    "commands",
+    "xhr",
+    "ajax",
+    "text",
+    "to",
+    "speech"
+  ],
+  "author": "Devin R. Olsen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drolsen/alex/issues"
+  },
+  "homepage": "https://github.com/drolsen/alex#readme",
+  "dependencies": {
+    "annyang": "^2.6.1",
+    "express": "^4.16.4",
+    "opn": "^5.4.0",
+    "say": "^0.15.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.2.2",
+    "babel": "^6.23.0",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-add-react-displayname": "0.0.5",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "clean-webpack-plugin": "^1.0.0",
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.2.0",
+    "webpack-dev-server": "^3.1.14",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
