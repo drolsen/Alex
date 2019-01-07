@@ -89,6 +89,7 @@ Make alex say something and get a callback to chain further methods.
 | text | `string` | The text to be passed to alex to speak. |
 | callback | `function` | A callback that is performed after Alex is done speaking. |
 
+#### Basic say example
 ```javascript
 onMatch: () => {
   alex.say('Hello world', () => {
@@ -106,6 +107,7 @@ Dispatch a request to server to run a specific server side command.
 | input | `string` | array | object` | Data to be passed to server side command. Can be a string or array of data. |
 | callback | `function` | A callback that is performed after alex is done speaking. |
 
+#### Basic run example
 ```javascript
 onMatch: () => {
   alex.run('server side command', ['data', 'data'], () => {
@@ -123,7 +125,7 @@ Allows alex a way to asking for more details, to then proceed on with further op
 | callback | `function` | A callback that is performed after alex is done speaking. This callback always gives back the end users answer to alex's ask. |
 | options | `object` | Options to configure how alex asks for feedback to end user. |
 
-### Basic ask example
+#### Basic ask example
 ```javascript
 onMatch: () => {
   alex.ask('Would you like red, or blue?', {}, (answer) => {
@@ -132,7 +134,7 @@ onMatch: () => {
 }
 ```
 
-### Advanced ask example
+#### Advanced ask example
 ```javascript
 onMatch: () => {
   alex.ask('Hot or cold coffee?', (answer) => {
@@ -142,6 +144,7 @@ onMatch: () => {
     retryInterval: 10000,
     retryMessages: ['No answer yet, hot or cold coffee?'],
     givenupMessages: ['Perhaps coffee was a bad choice.'],
+    cancel: ['stop', 'cancel'],
     cancelMessages: ['Ok.', 'Sure.']
   });
 }
@@ -168,6 +171,8 @@ This method is a rolled up method that is essentially a `alex.ask`, so the same 
 | callback | `function` | A callback that is performed after alex is done finding files and asking you what to do with these files. |
 | options | `object` | Options to configure the internal `ask` once `find` matches are found (See `ask` options). |
 
+#### Basic find example
+
 ```javascript
 onMatch: (input) => {
   alex.find(input, () => {
@@ -186,11 +191,7 @@ Allows alex to open files into their default application by simply saying `filen
 | options | `object` | Options to configure how alex searches a file system. |
 
 
-#### Open options
-| Prop | Type | Description |
-| --- | --- | --- |
-| base | `string` | The base directory on your local file system in which you would like alex to recursively search for files within. |
-| extensions | `array` | Limits the search set to only specific file extensions. Default is all files. |
+#### Basic ask example
 
 ```javascript
 onMatch: (input) => {
@@ -199,6 +200,21 @@ onMatch: (input) => {
   });
 }
 ```
+#### Extension limit open example
+
+```javascript
+onMatch: (input) => {
+  alex.open(input, () => {
+    console.log('server side is done opening found file.')
+  }, {
+    extensions: 'css|js|jsx|html|less|txt|xml'
+  });
+}
+```
+#### Open options
+| Prop | Type | Description |
+| --- | --- | --- |
+| extensions | `array` | Limits the search set to only specific file extensions. Default is all files. |
 
 ## search(input, callback, options)
 Allows alex to search the web and open the results page up in a new browser tab.
@@ -209,11 +225,7 @@ Allows alex to search the web and open the results page up in a new browser tab.
 | callback | `function` | A callback that is performed after alex is done opening search results in browser. |
 | options | `object` | Options to configure how alex searches the web. |
 
-#### Search options
-| Prop | Type | Description |
-| --- | --- | --- |
-| engine | `string` | The search engine of choice you would like alex to use when searching the web. Ex. `https://www.google.com` or `//www.google.com` |
-
+#### Basic search example
 
 ```javascript
 onMatch: (input) => {
@@ -223,18 +235,34 @@ onMatch: (input) => {
 }
 ```
 
+#### Engine configuration search example
+
+```javascript
+onMatch: (input) => {
+  alex.open(input, () => {
+    console.log('server side is done opening found file.')
+  }, {
+    engine: '//www.duckduckgo.com/'
+  });
+}
+```
+
+#### Search options
+| Prop | Type | Description |
+| --- | --- | --- |
+| engine | `string` | The search engine of choice you would like alex to use when searching the web. Ex. `https://www.google.com` or `//www.google.com` |
+
 # Features
 Although alex is designed to allow developers to get up and running in creating custom commands and tasks, alex comes with a whole bunch of baseline features.
-
 
 
 ## Wiki
 Alex comes with the ability to research detailed information around topics, events, people, places, terms, words etc for you. Essentially alex has the ability to be a powerful encyclopedia for you. Results are sourced from wikipedia online using the [node-wikipedia](https://www.npmjs.com/package/node-wikipedia) library and are limited to either specific data parts or the first paragraph of a general information. The wiki questions are "who, what, when, where" type of questions with no guarantee of one type resulting in more details than another.
 
-### Options
+#### Options
 You can always disable this feature by settings `wiki` prop to false during your client side class install.
 
-```
+```javascript
 const AlexClient = require('audio-level-executing-xhr');
 const alex = new AlexClient({
   wiki: false
@@ -244,10 +272,10 @@ const alex = new AlexClient({
 ## Math
 Alex has the ability to be a basic calculator by translating math formulas and sums for you.
 
-### Options
+#### Options
 You can always disable this feature by setting the `math` prop to false during your client side class install.
 
-```
+```javascript
 const AlexClient = require('audio-level-executing-xhr');
 const alex = new AlexClient({
   math: false
@@ -261,11 +289,12 @@ const alex = new AlexClient({
 ## Web Search
 Although alex has exposed it's `search` method as API, alex comes with a web search feature built in.
 
-### Options
+#### Options
 You can always customize the baseline search engine or feature during your client side class install.
 
 Setting search engine prop to a string url of the search engine of choice will make alex use this search engine as its baseline web search feature.
-```
+
+```javascript
 const AlexClient = require('audio-level-executing-xhr');
 const alex = new AlexClient({
   search: 'https://duckduckgo.com/'
@@ -274,7 +303,7 @@ const alex = new AlexClient({
 
 Setting search prop to false will disable the baseline web search feature from alex. Useful if you wish to overload baseline with your own search method.
 
-```
+```javascript
 const AlexClient = require('audio-level-executing-xhr');
 const alex = new AlexClient({
   search: false
@@ -288,12 +317,13 @@ const alex = new AlexClient({
 ## Find
 Although alex has exposed it's `find` method as API, alex comes with system level "find in files" feature built in.
 
-### Options
+#### Options
 You can always customize the baseline feature during both your server side class installs.
 
 Base allows you to define the base directory on your local file system in which you wish alex to recursively search within.
 **Note:** this `base:` prop is shared with the `open` feature outlined below.
-```
+
+```javascript
 const AlexServer = require('audio-level-executing-xhr/server');
 const alex = new AlexClient({
   base: '[A]/[LOCAL]/[PATH]/'
@@ -301,7 +331,8 @@ const alex = new AlexClient({
 ```
 
 To disable baseline find feature all toghether, set the find prop to false. Useful when wanting to overload the baseline find feature with your own find method.
-```
+
+```javascript
 const AlexServer = require('audio-level-executing-xhr/server');
 const alex = new AlexClient({
   find: false
@@ -311,12 +342,13 @@ const alex = new AlexClient({
 ## Open
 Although alex has exposed it's `open` method as API, alex comes with system level "open file" feature built in.
 
-### Options
+#### Options
 You can always customize the baseline feature during both your server side class installs.
 
 Base allows you to define the base directory on your local file system in which you wish alex to recursively search within.
 **Note:** this `base:` prop is shared with the `find` feature outlined above.
-```
+
+```javascript
 const AlexServer = require('audio-level-executing-xhr/server');
 const alex = new AlexClient({
   base: '[A]/[LOCAL]/[PATH]/'
@@ -324,7 +356,8 @@ const alex = new AlexClient({
 ```
 
 To disable baseline open feature, set the `open:` prop to false. Useful when wanting to overload the baseline open feature with your own open method.
-```
+
+```javascript
 const AlexServer = require('audio-level-executing-xhr/server');
 const alex = new AlexClient({
   open: false
