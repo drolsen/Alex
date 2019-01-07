@@ -34,8 +34,7 @@ const alex = new AlexServer({options}, [commands]);
 
 ```
 
-# Package file
-Alex will need it's server file to be ran in nodejs. It's recommend to do so from a package.json file.
+Alex requires it's server file to be ran in nodejs. It's recommend to do so from a package.json file.
 ```json
 scripts: {
   "start": "node server-file.js"
