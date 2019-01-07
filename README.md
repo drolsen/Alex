@@ -190,7 +190,6 @@ Allows alex to open files into their default application by simply saying `filen
 #### Open options
 | Prop | Type | Description |
 | --- | --- | --- |
-| base | `string` | The base directory on your local file system in which you would like alex to recursively search for files within. |
 | extensions | `array` | Limits the search set to only specific file extensions. Default is all files. |
 
 ```javascript
@@ -235,7 +234,7 @@ Alex comes with the ability to research detailed information around topics, even
 ### Options
 You can always disable this feature by settings `wiki` prop to false during your client side class install.
 
-```
+```javascript
 const AlexClient = require('audio-level-executing-xhr');
 const alex = new AlexClient({
   wiki: false
@@ -248,7 +247,7 @@ Alex has the ability to be a basic calculator by translating math formulas and s
 ### Options
 You can always disable this feature by setting the `math` prop to false during your client side class install.
 
-```
+```javascript
 const AlexClient = require('audio-level-executing-xhr');
 const alex = new AlexClient({
   math: false
@@ -266,7 +265,8 @@ Although alex has exposed it's `search` method as API, alex comes with a web sea
 You can always customize the baseline search engine or feature during your client side class install.
 
 Setting search engine prop to a string url of the search engine of choice will make alex use this search engine as its baseline web search feature.
-```
+
+```javascript
 const AlexClient = require('audio-level-executing-xhr');
 const alex = new AlexClient({
   search: 'https://duckduckgo.com/'
@@ -275,7 +275,7 @@ const alex = new AlexClient({
 
 Setting search prop to false will disable the baseline web search feature from alex. Useful if you wish to overload baseline with your own search method.
 
-```
+```javascript
 const AlexClient = require('audio-level-executing-xhr');
 const alex = new AlexClient({
   search: false
@@ -294,7 +294,8 @@ You can always customize the baseline feature during both your server side class
 
 Base allows you to define the base directory on your local file system in which you wish alex to recursively search within.
 **Note:** this `base:` prop is shared with the `open` feature outlined below.
-```
+
+```javascript
 const AlexServer = require('audio-level-executing-xhr/server');
 const alex = new AlexClient({
   base: '[A]/[LOCAL]/[PATH]/'
@@ -302,7 +303,8 @@ const alex = new AlexClient({
 ```
 
 To disable baseline find feature all toghether, set the find prop to false. Useful when wanting to overload the baseline find feature with your own find method.
-```
+
+```javascript
 const AlexServer = require('audio-level-executing-xhr/server');
 const alex = new AlexClient({
   find: false
@@ -317,7 +319,8 @@ You can always customize the baseline feature during both your server side class
 
 Base allows you to define the base directory on your local file system in which you wish alex to recursively search within.
 **Note:** this `base:` prop is shared with the `find` feature outlined above.
-```
+
+```javascript
 const AlexServer = require('audio-level-executing-xhr/server');
 const alex = new AlexClient({
   base: '[A]/[LOCAL]/[PATH]/'
@@ -325,7 +328,8 @@ const alex = new AlexClient({
 ```
 
 To disable baseline open feature, set the `open:` prop to false. Useful when wanting to overload the baseline open feature with your own open method.
-```
+
+```javascript
 const AlexServer = require('audio-level-executing-xhr/server');
 const alex = new AlexClient({
   open: false
