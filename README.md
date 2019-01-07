@@ -1,110 +1,190 @@
-# Alex - (Audio level executable XHR)
-A nodejs based personal voice assistance that can do many common system level tasks using only verbal commands.
+![Alex logo](https://github.com/drolsen/src/assets/logo-three.png)
+(audio level executing xhr)
 
-## Getting started
-```
+A browser based voice assistant that can verbally do system level tasks and text to speech feedback.
+
+The beauty of alex is within ease of authoring complex verbal relationships between client side input, server side tasks and text-to-speech feedback to capture the full user experince of a voice assistant.
+
+# How it works
+Alex is divided into two classes:
+- AlexClient
+- AlexServer
+
+Using the [annyang library](https://www.npmjs.com/package/annyang), the client side is constantly listening form your browser's mic, and intrupting that input into an array of best guesses. This data is then scrubbed against a pre-authored client side configuration to perform a number of methods or custom code.
+
+Out on the server side (local express server) incoming tasks again scrubbed against a pre-authored server side configuration to then perform server side code. The server side comes with system level text to speech abilities using the [say library](https://www.npmjs.com/package/say).
+
+# Getting started
+```shell
 npm install audio-level-executable-xhr
 ```
 
-### Creating a client file
-```
+# Creating a client file
+```javascript
 const AlexClient = require('audio-level-executable-xhr');
 const alex = new AlexClient({options}, [commands]);
 
 ```
 
-### Creating a server file
-```
+# Creating a server file
+```javascript
 const AlexServer = require('audio-level-executable-xhr/server');
 const alex = new AlexServer({options}, [commands]);
 
 ```
 
-### Package file
+# Package file
 Alex will need your server file to be ran by nodejs. It's recommened to do so from your package.json file.
 Mote: the example below uses the script command `"start"`; this is not a requirement. Only `node server-file.js` is reuqired and can be adapted exisiting script commands you may already have.
-```
-...
+```json
 scripts: {
 	"start": "node server-file.js"
 }
-...
 ```
 
-## Client side methods
+# Client side methods
 Alex client side class comes with a whole host of methods to allow you to fully customize a command object's onMatch callback.
 
-### alex.say(string, callback);
+## alex.say(text, callback);
+
 Make alex say something and get a callback to chain further methods.
 
-### alex.run(command, input, callback)
-Dispatch a request to server side to run a paticular server side command with arguments and callback to chain further methods.
+| Prop | Type | Description |
+| --- | --- | --- |
+| text | `string` | The text to be passed to alex to speak. |
+| callback | `function` | A callback that is performed after alex is done speaking. |
 
-### alex.ask(string, options, callback)
-Allows alex a way to asking for more details, to then proceed on with further operations using users answer.
-#### options
-```
-{
-	retry: 3, 							// number of attempts to keep trying before giving up on feedback.
-	retryInterval: 10000, 	// 10 seconds between re-prompts for feedback.
-	retryMessages: [], 			// messages to randomly use during retry attempts.
-	givenupMessages: [				// message to use when listening for feedback has given up after retries has reached 0.
-		'Perhaps we should try this again later.'
-	],
-	cancels: [], 						// keywords that will kick the user out of feedback retry.
-	cancelMessages: [				// messages to randomly use during a feedback cancel.
-		'Ok.',
-		'Sure.',
-		'Absolutly.',
-		'Stopped.'
-	]
+```javascript
+onMatch: () => {
+	alex.say('Hello world', () => {
+		console.log('alex is done speaking now.')
+	});
 }
 ```
-### alex.find - Note baseline alex comes with a find command structure in place for you. Method left public to allow development use.
+
+### alex.run(command, input, callback)
+Dispatch a request to server to run a specific server side command.
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| command | `string` | The server side command to perform. |
+| input | `string | array | object` | Data to be passed to server side command. Can be a string or array of data. |
+| callback | `function` | A callback that is performed after alex is done speaking. |
+
+```javascript
+onMatch: () => {
+	alex.run('server side command', ['data', 'data'], () => {
+		console.log('server side is done now.')
+	});
+}
+```
+
+### alex.ask(string, callback(answer), options)
+Allows alex a way to asking for more details, to then proceed on with further operations using users answer.
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| text | `string` | Text to be passed to alex to stage a question to end user. |
+| callback | `function` | A callback that is performed after alex is done speaking. This callback always gives back the end users answer to alex's ask. |
+| options | `object` | Options to configure how alex asks for feedback to end user. |
+
+
+#### Ask options
+| Prop | Type | Description |
+| --- | --- | --- |
+| retry | `int` | How many times would you like alex to keep trying to obtain an answer from end user. Default is forever. |
+| retryInterval | `int` | How many miliseconds you would like alex to wait between retry attempts. |
+| retryMessages | `array[string]` | Array of messages alex will randomly pick from and speak during retry attempts. Note, if not set, the ask question will be re-spoken to end user. |
+| givenupMessages | `array[string]` | Array of messages alex will randomly pick from and speak when retry int has reached 0. |
+| cancel | `array[string]` | Array of keywords that if spoken by end user, will cancel the ask. |
+| cancelMessages | `array[string]` | Array of messages alex will randomly pick from and speak when ask has been canceled. |
+
+
+### Basic ask example
+```javascript
+onMatch: () => {
+	alex.ask('Would you like red, or blue?', {}, (answer) => {
+		alex.say('You have choosen ' + answer);
+	});
+}
+```
+
+### Advanced ask example
+```javascript
+onMatch: () => {
+	alex.ask('Hot or cold coffee?', (answer) => {
+		alex.say('You have choosen ' + answer);
+	}, {
+    retry: 3,
+    retryInterval: 10000,
+    retryMessages: ['No answer yet, hot or cold coffee?'],
+    givenupMessages: ['Perhaps coffee was a bad choice.'],
+    cancelMessages: ['Ok.', 'Sure.']
+	});
+}
+```
+
+### alex.find(input, callback, options)
 Allows alex to find a string across file system, tell you how many matches / files found and if you would like to open / edit the files.
+This method is a rolled up method that is essentially a `alex.ask`, so the same options can be passed in a find.
 
-### alex.open - Note, baseline alex comes with a open command structure in place for you. Method left public to allow development use.
-Allows alex to open files by "file name - dot - extension" in that file's default prefereed application on your system for editing.
+| Prop | Type | Description |
+| --- | --- | --- |
+| input | `string` | The string to search for across file system. |
+| callback | `function` | A callback that is performed after alex is done finding files and asking you what to do with these files. |
+| options | `object` | Options to configure the internal `ask` once `find` matches are found (See `ask` options). |
 
-### alex.search() - Note baseline alex comes with a search command structure in place for you. Method left public to allow development use.
-Allows alex to search the web by string.
+```javascript
+onMatch: (input) => {
+	alex.find(input, () => {
+		console.log('server side is done finding files and possibly opening them.')
+	});
+}
+```
+
+### alex.open(input, callback, options)
+Allows alex to open files into their default application by simply saying `name dot extension`.
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| input | `string` | The file to search for across file system. |
+| callback | `function` | A callback that is performed after alex is done finding file and opening it. |
+| options | `object` | Options to configure how alex searches a file system. |
 
 
+#### Open options
+| Prop | Type | Description |
+| --- | --- | --- |
+| base | `string` | The base directory on your local file system in which you would like alex to recursivly search for files within. |
+| extensions | `array` | Limits the search set to only specific file extensions. |
 
-## Commands
-Alex can be broken down into two directions of interaction; you prompting Alex with a command, or Alex prompting you for feedback.
-While alex's prompting you for feedback is fairly linear, your options in how you command to prompt alex is very robust and can be further broken down into two categories; deterministic, and undeterministic commands. 
+```javascript
+onMatch: (input) => {
+	alex.open(input, () => {
+		console.log('server side is done opening found file.')
+	});
+}
+```
 
-The deterministic commands are constant commands that yeild constant results such as open file, create something. While the undeterministic commands are open ended to yeild undeterministic answers or results. These undeterministic commands are broken down into a level of difficulty and are; `who`, `what`, `when`, `where`, `why` and `how`. 
+### alex.search(input, callback, options)
+Allows alex to search the web and open the results page up in a new browser tab.
 
-The `who` and `what` commands are the easiest to yeild results for, as they are most offten large samplings of data easily found online. The `when`, `where` commands tend to get a tad more percises over what would be the same data samplings of `who` and `what` categories. Then we have the `why` and `how` cateories being the most difficult types of questions, as they are subjective to needed conclusions over all the previous categories of data.
+| Prop | Type | Description |
+| --- | --- | --- |
+| input | `string` | The string to search the web with. |
+| callback | `function` | A callback that is performed after alex is done opening search results in browser. |
+| options | `object` | Options to configure how alex searches the web. |
 
-As of this release, Alex does not store any data around undeterminisstic commands, thus trying to acheive a level of difficulty within the why and how commands is not possible. Further versions may include a way to configure this option and make alex begin concluding attributes over results he has found to help facilitate a robust interaction.
+#### Search options
+| Prop | Type | Description |
+| --- | --- | --- |
+| engine | `string` | The search engine of choice you would like alex to use when searching the web. Ex. `https://www.google.com` or `//www.google.com` |
 
-- open <{file name} dot {extension}> - Open any file within unslate simply by file name and extension.
-- new <type> - Create a new atom, molecule, organism, modifier, template, page, variable, container js.
-- who, what, when, where <topic|event|person|place|thing> - Alex has the ability to research items realtime for you. Simply ask him who, what, when, where type questions over any topic and he will give you a summary or percise information quickly for you.
 
-## How it works
-Alex is made up of two primary parts, the client side and the server side.
-The client side also comes with a webpack plugin to help alex hook into webpack's stat object for error reporting during failed builds.
-
-### Local Client
-The client end of alex uses a lightweight annyang voice recognition JS plugin to leverage your browser's mic and make predecitions on spoken words. Once a match of a combination of words is found, command is dispatched to the server side for Alex to process.
-
-The client end of alex is tied to the Unslate guide, so no actual production assets will produce alex for say a remote server. 
-Alex is only ever available within local dev build mode.
-
-### Local Server
-The server side of alex is a dedicated lightweight express server that allows Alex to take commands from browser down to system level operations locally. Although Unslate leverages webpack-dev-server to run it's dev builds, webpack-dev-server does not offer server side processing and really should remain dedicated to doing what it does best, which is bundle up our assets and serve them in browser from memory.
-
-As commands are sent out from webpack-dev-server client side and recived by expess server side, alex will begin to procees the command and maintain states to either prompt you for further information or keep him self busy with his orignally requested task.
-
-### Configuration
-You can always turn Alex off by editing your Unslate package.json file.
-Simply remove `npm run alex | ` from the dev script and alex will now be bypassed and no longer ran during local dev builds.
-
-For finer levels of configuration, alex comes with a alex.config.js file that allows you to change all kinds of properties.
-
-- Speed - Turn up or down Alex read speed.
-- Humor - Turn up or down Alex humors reponses during interactions by %. Default is 25%.
+```javascript
+onMatch: (input) => {
+	alex.search(input, () => {
+		console.log('server side is done searching the web and opening results.')
+	});
+}
+```
