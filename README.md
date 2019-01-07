@@ -142,6 +142,7 @@ onMatch: () => {
     retryInterval: 10000,
     retryMessages: ['No answer yet, hot or cold coffee?'],
     givenupMessages: ['Perhaps coffee was a bad choice.'],
+    cancel: ['stop', 'cancel'],
     cancelMessages: ['Ok.', 'Sure.']
   });
 }
