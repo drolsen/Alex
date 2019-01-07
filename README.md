@@ -71,9 +71,9 @@ Each rule block has a `commands:` prop that defines a set of word combos, that w
 
 ## onMatch: (input, match, all)
 The `onMatch:` callback always returns three parts of data:
-- input = string of what alex picked up on the mic input that made the rule a match.
-- match = string of what the exact match was that made the rule a match.
-- all = array of all alex's best guesses of mic input that made the rule a match.
+- **input** = string of what alex picked up on the mic input that made the rule a match.
+- **match** = string of what the exact match was that made the rule a match.
+- **all** = array of all alex's best guesses of mic input that made the rule a match.
 
 Within the `onMatch:` callback you write the logic for the rule. It's here where you can begin to leverage Alex's API methods to aid in the interfacing with server side.
 
@@ -123,18 +123,6 @@ Allows alex a way to asking for more details, to then proceed on with further op
 | callback | `function` | A callback that is performed after alex is done speaking. This callback always gives back the end users answer to alex's ask. |
 | options | `object` | Options to configure how alex asks for feedback to end user. |
 
-
-#### Ask options
-| Prop | Type | Description |
-| --- | --- | --- |
-| retry | `int` | How many times would you like alex to keep trying to obtain an answer from end user. Default is forever. |
-| retryInterval | `int` | How many milliseconds you would like alex to wait between retry attempts. |
-| retryMessages | `array[string]` | Array of messages alex will randomly pick from and speak during retry attempts. Note, if not set, the ask question will be re-spoken to end user. |
-| givenupMessages | `array[string]` | Array of messages alex will randomly pick from and speak when retry int has reached 0. |
-| cancel | `array[string]` | Array of keywords that if spoken by end user, will cancel the ask. |
-| cancelMessages | `array[string]` | Array of messages alex will randomly pick from and speak when ask has been canceled. |
-
-
 ### Basic ask example
 ```javascript
 onMatch: () => {
@@ -158,6 +146,17 @@ onMatch: () => {
   });
 }
 ```
+
+#### Ask options
+| Prop | Type | Description |
+| --- | --- | --- |
+| retry | `int` | How many times would you like alex to keep trying to obtain an answer from end user. Default is forever. |
+| retryInterval | `int` | How many milliseconds you would like alex to wait between retry attempts. |
+| retryMessages | `array[string]` | Array of messages alex will randomly pick from and speak during retry attempts. Note, if not set, the ask question will be re-spoken to end user. |
+| givenupMessages | `array[string]` | Array of messages alex will randomly pick from and speak when retry int has reached 0. |
+| cancel | `array[string]` | Array of keywords that if spoken by end user, will cancel the ask. |
+| cancelMessages | `array[string]` | Array of messages alex will randomly pick from and speak when ask has been canceled. |
+
 
 ## find(input, callback, options)
 Allows alex to find a string across file system, tell you how many matches / files found and if you would like to open / edit the files.
