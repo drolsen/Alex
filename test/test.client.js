@@ -25,4 +25,8 @@ const alex = new AlexClient([
 			});
 		}
 	}
-]);
+], {
+	base: '/',
+	url: '/',
+	port: '8025'
+});

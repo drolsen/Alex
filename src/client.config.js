@@ -18,8 +18,8 @@ const config = {
 		        'compact': false,
 		        'plugins': [
 		          'transform-object-rest-spread', // (see: https://babeljs.io/docs/en/babel-plugin-transform-object-rest-spread)
-		          'transform-class-properties', // (see: https://babeljs.io/docs/en/babel-plugin-transform-class-properties/)
-		          'add-react-displayname' // (see: https://www.npmjs.com/package/babel-plugin-add-react-displayname)
+		          'transform-class-properties',   // (see: https://babeljs.io/docs/en/babel-plugin-transform-class-properties/)
+		          'add-react-displayname'         // (see: https://www.npmjs.com/package/babel-plugin-add-react-displayname)
 		        ]
 		      }
 		    }]
@@ -27,8 +27,8 @@ const config = {
       {
         'test': /\.html$/, // for .html files
         'use': { 
-          'loader': 'html-loader', // (see: https://www.npmjs.com/package/html-loader)
-          'options': { 'minimize': true } // run html files through minification
+          'loader': 'html-loader',          // (see: https://www.npmjs.com/package/html-loader)
+          'options': { 'minimize': true }   // run html files through minification
         }
       }      
   	]
