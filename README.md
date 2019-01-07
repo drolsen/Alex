@@ -4,7 +4,7 @@
 
 A browser based voice assistant that can verbally do system level tasks with text-to-speech feedback.
 
-The beauty of Alex is within ease of authoring complex verbal relationships between client side input, server side tasks and text-to-speech feedback to capture the full user experience of a voice assistant.
+The beauty of Alex is within the ease of authoring complex verbal relationships between client side input, server side tasks with text-to-speech feedback to capture the full user experience of a voice assistant.
 
 # How it works
 Alex is divided into two classes:
@@ -46,8 +46,8 @@ While rules and methods you configure on client/server side of alex are fundamen
 
 **Note**: Some configuration options may apply to only client or server side so please read the features documentation carefully below.
 
-#Rules
-In the above examples we define an array of objects called rules as the second argument in our class setup. 
+## Rules
+In the below examples, we define an array of objects called rules as the second argument in our class setup. 
 
 ```javascript
 const AlexClient = require('audio-level-executing-xhr');
