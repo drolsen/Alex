@@ -1,4 +1,5 @@
-![Alex logo](https://github.com/drolsen/alex/src/assets/logo-three.png)
+![Alex logo](https://raw.githubusercontent.com/drolsen/alex/master/src/assets/logo-three.png)
+
 (audio level executing xhr)
 
 A browser based voice assistant that can verbally do system level tasks and text to speech feedback.
