@@ -4,39 +4,38 @@
 
 A browser based voice assistant that can verbally do system level tasks and text to speech feedback.
 
-The beauty of alex is within ease of authoring complex verbal relationships between client side input, server side tasks and text-to-speech feedback to capture the full user experince of a voice assistant.
+The beauty of Alex is within ease of authoring complex verbal relationships between client side input, server side tasks and text-to-speech feedback to capture the full user experience of a voice assistant.
 
 # How it works
 Alex is divided into two classes:
 - AlexClient
 - AlexServer
 
-Using the [annyang library](https://www.npmjs.com/package/annyang), the client side is constantly listening form your browser's mic, and intrupting that input into an array of best guesses. This data is then scrubbed against a pre-authored client side configuration to perform a number of methods or custom code.
+Using the [annyang library](https://www.npmjs.com/package/annyang), the client side is constantly interpreting your browser's mic input into an array of text based best guesses. This data is then scrubbed against a pre-authored client side configuration to perform a number of methods or custom code.
 
-Out on the server side (local express server) incoming tasks again scrubbed against a pre-authored server side configuration to then perform server side code. The server side comes with system level text to speech abilities using the [say library](https://www.npmjs.com/package/say).
+Out on the server side (local express server) incoming tasks are again scrubbed against a pre-authored server side configuration to then perform server side tasks. The server side comes with system level text to speech abilities using the [say library](https://www.npmjs.com/package/say) that has been abstracted out to alex's API props and methods.
 
 # Getting started
 ```shell
-npm install audio-level-executable-xhr
+$ npm install audio-level-executing-xhr
 ```
 
 # Creating a client file
 ```javascript
-const AlexClient = require('audio-level-executable-xhr');
+const AlexClient = require('audio-level-executing-xhr');
 const alex = new AlexClient({options}, [commands]);
 
 ```
 
 # Creating a server file
 ```javascript
-const AlexServer = require('audio-level-executable-xhr/server');
+const AlexServer = require('audio-level-executing-xhr/server');
 const alex = new AlexServer({options}, [commands]);
 
 ```
 
 # Package file
-Alex will need your server file to be ran by nodejs. It's recommened to do so from your package.json file.
-Mote: the example below uses the script command `"start"`; this is not a requirement. Only `node server-file.js` is reuqired and can be adapted exisiting script commands you may already have.
+Alex will need it's server file to be ran in nodejs. It's recommend to do so from a package.json file.
 ```json
 scripts: {
 	"start": "node server-file.js"
@@ -44,16 +43,16 @@ scripts: {
 ```
 
 # Client side methods
-Alex client side class comes with a whole host of methods to allow you to fully customize a command object's onMatch callback.
+Alex client side's class comes with a whole host of methods to allow you to fully customize a command object's onMatch callback.
 
-## alex.say(text, callback);
+## say(text, callback);
 
 Make alex say something and get a callback to chain further methods.
 
 | Prop | Type | Description |
 | --- | --- | --- |
 | text | `string` | The text to be passed to alex to speak. |
-| callback | `function` | A callback that is performed after alex is done speaking. |
+| callback | `function` | A callback that is performed after Alex is done speaking. |
 
 ```javascript
 onMatch: () => {
@@ -63,13 +62,13 @@ onMatch: () => {
 }
 ```
 
-### alex.run(command, input, callback)
+### run(command, input, callback)
 Dispatch a request to server to run a specific server side command.
 
 | Prop | Type | Description |
 | --- | --- | --- |
 | command | `string` | The server side command to perform. |
-| input | `string | array | object` | Data to be passed to server side command. Can be a string or array of data. |
+| input | `string` | array | object` | Data to be passed to server side command. Can be a string or array of data. |
 | callback | `function` | A callback that is performed after alex is done speaking. |
 
 ```javascript
@@ -80,8 +79,8 @@ onMatch: () => {
 }
 ```
 
-### alex.ask(string, callback(answer), options)
-Allows alex a way to asking for more details, to then proceed on with further operations using users answer.
+### ask(string, callback(answer), options)
+Allows alex a way to asking for more details, to then proceed on with further operations using user's answer.
 
 | Prop | Type | Description |
 | --- | --- | --- |
@@ -94,7 +93,7 @@ Allows alex a way to asking for more details, to then proceed on with further op
 | Prop | Type | Description |
 | --- | --- | --- |
 | retry | `int` | How many times would you like alex to keep trying to obtain an answer from end user. Default is forever. |
-| retryInterval | `int` | How many miliseconds you would like alex to wait between retry attempts. |
+| retryInterval | `int` | How many milliseconds you would like alex to wait between retry attempts. |
 | retryMessages | `array[string]` | Array of messages alex will randomly pick from and speak during retry attempts. Note, if not set, the ask question will be re-spoken to end user. |
 | givenupMessages | `array[string]` | Array of messages alex will randomly pick from and speak when retry int has reached 0. |
 | cancel | `array[string]` | Array of keywords that if spoken by end user, will cancel the ask. |
@@ -105,7 +104,7 @@ Allows alex a way to asking for more details, to then proceed on with further op
 ```javascript
 onMatch: () => {
 	alex.ask('Would you like red, or blue?', {}, (answer) => {
-		alex.say('You have choosen ' + answer);
+		alex.say('You have chosen ' + answer);
 	});
 }
 ```
@@ -125,7 +124,7 @@ onMatch: () => {
 }
 ```
 
-### alex.find(input, callback, options)
+### find(input, callback, options)
 Allows alex to find a string across file system, tell you how many matches / files found and if you would like to open / edit the files.
 This method is a rolled up method that is essentially a `alex.ask`, so the same options can be passed in a find.
 
@@ -143,8 +142,8 @@ onMatch: (input) => {
 }
 ```
 
-### alex.open(input, callback, options)
-Allows alex to open files into their default application by simply saying `name dot extension`.
+### open(input, callback, options)
+Allows alex to open files into their default application by simply saying `filename dot extension`.
 
 | Prop | Type | Description |
 | --- | --- | --- |
@@ -156,8 +155,8 @@ Allows alex to open files into their default application by simply saying `name 
 #### Open options
 | Prop | Type | Description |
 | --- | --- | --- |
-| base | `string` | The base directory on your local file system in which you would like alex to recursivly search for files within. |
-| extensions | `array` | Limits the search set to only specific file extensions. |
+| base | `string` | The base directory on your local file system in which you would like alex to recursively search for files within. |
+| extensions | `array` | Limits the search set to only specific file extensions. Default is all files. |
 
 ```javascript
 onMatch: (input) => {
@@ -167,7 +166,7 @@ onMatch: (input) => {
 }
 ```
 
-### alex.search(input, callback, options)
+### search(input, callback, options)
 Allows alex to search the web and open the results page up in a new browser tab.
 
 | Prop | Type | Description |
@@ -189,3 +188,119 @@ onMatch: (input) => {
 	});
 }
 ```
+
+# Features
+Although alex is designed to allow developers to get up and going at creating custom commands and tasks, alex comes with a whole bunch of baseline features.
+
+
+
+## Wiki
+Alex comes with the ability to research detailed information around topics, events, people, places, terms, words etc for you. Essentially alex has the ability to be a powerful encyclopedia for you. Results are sourced from wikipedia online using the [node-wikipedia](https://www.npmjs.com/package/node-wikipedia) library and are limited to either specific data parts or the first paragraph of a general information. The wiki questions are "who, what, when, where" type of questions with no guarantee of one type resulting in more details than another.
+
+### Options
+You can always disable this feature by settings `wiki` prop to false during your client side class install.
+
+```
+const AlexClient = require('audio-level-executing-xhr');
+const alex = new AlexClient({
+	wiki: false
+}, [commands]);
+```
+
+## Math
+Alex has the ability to be a basic calculator by translating math formulas and sums for you.
+
+### Options
+You can always disable this feature by setting the `math` prop to false during your client side class install.
+
+```
+const AlexClient = require('audio-level-executing-xhr');
+const alex = new AlexClient({
+	math: false
+}, [commands]);
+```
+
+
+
+
+
+## Web Search
+Although alex has exposed it's `search` method as API, alex comes with a web search feature built in.
+
+### Options
+You can always customize the baseline search engine or feature during your client side class install.
+
+Setting search engine prop to a string url of the search engine of choice will make alex use this search engine as its baseline web search feature.
+```
+const AlexClient = require('audio-level-executing-xhr');
+const alex = new AlexClient({
+	search: 'https://duckduckgo.com/'
+}, [commands]);
+```
+
+Setting search prop to false will disable the baseline web search feature from alex. Useful if you wish to overload baseline with your own search method.
+
+```
+const AlexClient = require('audio-level-executing-xhr');
+const alex = new AlexClient({
+	search: false
+}, [commands]);
+```
+
+
+
+
+
+## Find
+Although alex has exposed it's `find` method as API, alex comes with system level "find in files" feature built in.
+
+### Options
+You can always customize the baseline feature during both your server side class installs.
+
+Base allows you to define the base directory on your local file system in which you wish alex to recursively search within.
+**Note:** this `base:` prop is shared with the `open` feature outlined below.
+```
+const AlexServer = require('audio-level-executing-xhr/server');
+const alex = new AlexClient({
+	base: '[A]/[LOCAL]/[PATH]/'
+}, [commands]);
+```
+
+To disable baseline find feature all toghether, set the find prop to false. Useful when wanting to overload the baseline find feature with your own find method.
+```
+const AlexServer = require('audio-level-executing-xhr/server');
+const alex = new AlexClient({
+	find: false
+}, [commands]);
+```
+
+## Open
+Although alex has exposed it's `open` method as API, alex comes with system level "open file" feature built in.
+
+### Options
+You can always customize the baseline feature during both your server side class installs.
+
+Base allows you to define the base directory on your local file system in which you wish alex to recursively search within.
+**Note:** this `base:` prop is shared with the `find` feature outlined above.
+```
+const AlexServer = require('audio-level-executing-xhr/server');
+const alex = new AlexClient({
+	base: '[A]/[LOCAL]/[PATH]/'
+}, [commands]);
+```
+
+To disable baseline open feature, set the `open:` prop to false. Useful when wanting to overload the baseline open feature with your own open method.
+```
+const AlexServer = require('audio-level-executing-xhr/server');
+const alex = new AlexClient({
+	open: false
+}, [commands]);
+```
+
+
+# Privacy
+Alex is **NOT** hooked up to any database, tracking or cookies requirements of any kind! 
+Interfacing with alex is completely private and never recorded.
+
+# Security
+Alex is **NOT** intended to be ran on a remote web server. There are huge security concerns around allowing public access to commands / tasks performing system level file manipulation. This library is written for local private usage and no support around producing a version for remote servers is in the works nor will be supported at this time.
