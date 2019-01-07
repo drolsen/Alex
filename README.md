@@ -23,14 +23,14 @@ $ npm install audio-level-executing-xhr
 # Creating a client file
 ```javascript
 const AlexClient = require('audio-level-executing-xhr');
-const alex = new AlexClient({options}, [commands]);
+const alex = new AlexClient({options}, [rules]);
 
 ```
 
 # Creating a server file
 ```javascript
 const AlexServer = require('audio-level-executing-xhr/server');
-const alex = new AlexServer({options}, [commands]);
+const alex = new AlexServer({options}, [rules]);
 
 ```
 
@@ -40,6 +40,41 @@ scripts: {
   "start": "node server-file.js"
 }
 ```
+
+# Structure
+While commands you configure on client side are fundamentally different, the configuration structure for both client side and server side is consistent. Please note however, some configuration options may apply to only client or server side so please read the features documentation carefully below.
+
+#Rules
+In the above examples we define an array of objects called rules as the second argument in our class setup. 
+
+```javascript
+const AlexClient = require('audio-level-executing-xhr');
+const alex = new AlexClient({options}, [
+{
+  commands: ['string', 'string', 'string']
+  onMatch: (input, match, all) => {
+    ...
+  }
+},
+{
+  commands: ['string', 'string', 'string']
+  onMatch: (input, match, all) => {
+    ...
+  }  
+}
+]);
+```
+## commands: ['string', 'string', 'string']
+Each rule block has a `commands:` prop that defines a set of word combos that when matched verbally allows the rule's onMatch callback is to be performed. 
+
+## onMatch: (input, match, all)
+The onMatch callback always returns data for you to use within your onMatch logic and alex API methods.
+- input = string of what alex picked up on the mic input that made the rule a match.
+- match = string of what the exact match was that made the rule a match.
+- all = array of all alex's best guesses of mic input that made the rule a match.
+
+Within the onMatch callback is where you will write the logic for the rule. It's here where you can begin to leverage Alex's API methods to aid in the interfacing with server side.
+
 
 # Client side methods
 Alex client side's class comes with a whole host of methods to allow you to fully customize a command object's onMatch callback.
