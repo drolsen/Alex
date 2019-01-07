@@ -1,7 +1,7 @@
 {
-  "name": "alex",
+  "name": "assisted-listener-executing-xhr",
   "version": "1.0.0",
-  "description": "Audio level executable XHR",
+  "description": "Alex is client and Server side API to create a robust personal voice assistant.",
   "main": "client.js",
   "scripts": {
     "test": "npm run dev",
@@ -37,7 +37,11 @@
   "dependencies": {
     "annyang": "^2.6.1",
     "express": "^4.16.4",
+    "find-in-files": "^0.5.0",
+    "node-wikipedia": "0.0.2",
+    "number-to-words": "^1.2.4",
     "opn": "^5.4.0",
+    "recursive-readdir": "^2.2.2",
     "say": "^0.15.0"
   },
   "devDependencies": {

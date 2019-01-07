@@ -1,8 +1,75 @@
 # Alex - (Audio level executable XHR)
+A nodejs based personal voice assistance that can do many common system level tasks using only verbal commands.
 
-## About
-Alex is a personal voice assistance that can do many common Unslate development tasks using simple verbal commands.
-While running a Unslate dev build, Alex will be prompt and ready to assist you with opening files, creating new elements, researching topics, people, events and much more.
+## Getting started
+```
+npm install audio-level-executable-xhr
+```
+
+### Creating a client file
+```
+const AlexClient = require('audio-level-executable-xhr');
+const alex = new AlexClient({options}, [commands]);
+
+```
+
+### Creating a server file
+```
+const AlexServer = require('audio-level-executable-xhr/server');
+const alex = new AlexServer({options}, [commands]);
+
+```
+
+### Package file
+Alex will need your server file to be ran by nodejs. It's recommened to do so from your package.json file.
+Mote: the example below uses the script command `"start"`; this is not a requirement. Only `node server-file.js` is reuqired and can be adapted exisiting script commands you may already have.
+```
+...
+scripts: {
+	"start": "node server-file.js"
+}
+...
+```
+
+## Client side methods
+Alex client side class comes with a whole host of methods to allow you to fully customize a command object's onMatch callback.
+
+### alex.say(string, callback);
+Make alex say something and get a callback to chain further methods.
+
+### alex.run(command, input, callback)
+Dispatch a request to server side to run a paticular server side command with arguments and callback to chain further methods.
+
+### alex.ask(string, options, callback)
+Allows alex a way to asking for more details, to then proceed on with further operations using users answer.
+#### options
+```
+{
+	retry: 3, 							// number of attempts to keep trying before giving up on feedback.
+	retryInterval: 10000, 	// 10 seconds between re-prompts for feedback.
+	retryMessages: [], 			// messages to randomly use during retry attempts.
+	givenupMessages: [				// message to use when listening for feedback has given up after retries has reached 0.
+		'Perhaps we should try this again later.'
+	],
+	cancels: [], 						// keywords that will kick the user out of feedback retry.
+	cancelMessages: [				// messages to randomly use during a feedback cancel.
+		'Ok.',
+		'Sure.',
+		'Absolutly.',
+		'Stopped.'
+	]
+}
+```
+### alex.find - Note baseline alex comes with a find command structure in place for you. Method left public to allow development use.
+Allows alex to find a string across file system, tell you how many matches / files found and if you would like to open / edit the files.
+
+### alex.open - Note, baseline alex comes with a open command structure in place for you. Method left public to allow development use.
+Allows alex to open files by "file name - dot - extension" in that file's default prefereed application on your system for editing.
+
+### alex.search() - Note baseline alex comes with a search command structure in place for you. Method left public to allow development use.
+Allows alex to search the web by string.
+
+
 
 ## Commands
 Alex can be broken down into two directions of interaction; you prompting Alex with a command, or Alex prompting you for feedback.
