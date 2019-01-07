@@ -46,7 +46,7 @@ While rules and methods you configure on client/server side of alex are fundamen
 
 **Note**: Some configuration options may apply to only client or server side so please read the features documentation carefully below.
 
-## Rules
+## Rules [{...}, {...}, {...}]
 In the below examples, we define an array of objects called rules as the second argument in our class setup. 
 
 ```javascript
@@ -67,19 +67,18 @@ const alex = new AlexClient({options}, [
 ]);
 ```
 ## commands: ['string', 'string', 'string']
-Each rule block has a `commands:` prop that defines a set of word combos that when matched verbally allows the rule's onMatch callback is to be performed. 
+Each rule block has a `commands:` prop that defines a set of word combos, that when matched verbally, allows the rule's `onMatch:` callback is to be performed. 
 
 ## onMatch: (input, match, all)
-The onMatch callback always returns data for you to use within your onMatch logic and alex API methods.
+The `onMatch:` callback always returns three parts of data:
 - input = string of what alex picked up on the mic input that made the rule a match.
 - match = string of what the exact match was that made the rule a match.
 - all = array of all alex's best guesses of mic input that made the rule a match.
 
-Within the onMatch callback is where you will write the logic for the rule. It's here where you can begin to leverage Alex's API methods to aid in the interfacing with server side.
-
+Within the `onMatch:` callback you write the logic for the rule. It's here where you can begin to leverage Alex's API methods to aid in the interfacing with server side.
 
 # Client side methods
-Alex client side's class comes with a whole host of methods to allow you to fully customize a command object's onMatch callback.
+Alex client side's class comes with a whole host of methods to aid you in customizing a rule's onMatch callback logic.
 
 ## say(text, callback);
 
