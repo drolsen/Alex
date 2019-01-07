@@ -38,7 +38,7 @@ const alex = new AlexServer({options}, [commands]);
 Alex will need it's server file to be ran in nodejs. It's recommend to do so from a package.json file.
 ```json
 scripts: {
-	"start": "node server-file.js"
+  "start": "node server-file.js"
 }
 ```
 
@@ -56,9 +56,9 @@ Make alex say something and get a callback to chain further methods.
 
 ```javascript
 onMatch: () => {
-	alex.say('Hello world', () => {
-		console.log('alex is done speaking now.')
-	});
+  alex.say('Hello world', () => {
+    console.log('alex is done speaking now.')
+  });
 }
 ```
 
@@ -73,9 +73,9 @@ Dispatch a request to server to run a specific server side command.
 
 ```javascript
 onMatch: () => {
-	alex.run('server side command', ['data', 'data'], () => {
-		console.log('server side is done now.')
-	});
+  alex.run('server side command', ['data', 'data'], () => {
+    console.log('server side is done now.')
+  });
 }
 ```
 
@@ -103,24 +103,24 @@ Allows alex a way to asking for more details, to then proceed on with further op
 ### Basic ask example
 ```javascript
 onMatch: () => {
-	alex.ask('Would you like red, or blue?', {}, (answer) => {
-		alex.say('You have chosen ' + answer);
-	});
+  alex.ask('Would you like red, or blue?', {}, (answer) => {
+    alex.say('You have chosen ' + answer);
+  });
 }
 ```
 
 ### Advanced ask example
 ```javascript
 onMatch: () => {
-	alex.ask('Hot or cold coffee?', (answer) => {
-		alex.say('You have choosen ' + answer);
-	}, {
+  alex.ask('Hot or cold coffee?', (answer) => {
+    alex.say('You have choosen ' + answer);
+  }, {
     retry: 3,
     retryInterval: 10000,
     retryMessages: ['No answer yet, hot or cold coffee?'],
     givenupMessages: ['Perhaps coffee was a bad choice.'],
     cancelMessages: ['Ok.', 'Sure.']
-	});
+  });
 }
 ```
 
@@ -136,9 +136,9 @@ This method is a rolled up method that is essentially a `alex.ask`, so the same 
 
 ```javascript
 onMatch: (input) => {
-	alex.find(input, () => {
-		console.log('server side is done finding files and possibly opening them.')
-	});
+  alex.find(input, () => {
+    console.log('server side is done finding files and possibly opening them.')
+  });
 }
 ```
 
@@ -160,9 +160,9 @@ Allows alex to open files into their default application by simply saying `filen
 
 ```javascript
 onMatch: (input) => {
-	alex.open(input, () => {
-		console.log('server side is done opening found file.')
-	});
+  alex.open(input, () => {
+    console.log('server side is done opening found file.')
+  });
 }
 ```
 
@@ -183,14 +183,14 @@ Allows alex to search the web and open the results page up in a new browser tab.
 
 ```javascript
 onMatch: (input) => {
-	alex.search(input, () => {
-		console.log('server side is done searching the web and opening results.')
-	});
+  alex.search(input, () => {
+    console.log('server side is done searching the web and opening results.')
+  });
 }
 ```
 
 # Features
-Although alex is designed to allow developers to get up and going at creating custom commands and tasks, alex comes with a whole bunch of baseline features.
+Although alex is designed to allow developers to get up and running in creating custom commands and tasks, alex comes with a whole bunch of baseline features.
 
 
 
@@ -203,7 +203,7 @@ You can always disable this feature by settings `wiki` prop to false during your
 ```
 const AlexClient = require('audio-level-executing-xhr');
 const alex = new AlexClient({
-	wiki: false
+  wiki: false
 }, [commands]);
 ```
 
@@ -216,7 +216,7 @@ You can always disable this feature by setting the `math` prop to false during y
 ```
 const AlexClient = require('audio-level-executing-xhr');
 const alex = new AlexClient({
-	math: false
+  math: false
 }, [commands]);
 ```
 
@@ -234,7 +234,7 @@ Setting search engine prop to a string url of the search engine of choice will m
 ```
 const AlexClient = require('audio-level-executing-xhr');
 const alex = new AlexClient({
-	search: 'https://duckduckgo.com/'
+  search: 'https://duckduckgo.com/'
 }, [commands]);
 ```
 
@@ -243,7 +243,7 @@ Setting search prop to false will disable the baseline web search feature from a
 ```
 const AlexClient = require('audio-level-executing-xhr');
 const alex = new AlexClient({
-	search: false
+  search: false
 }, [commands]);
 ```
 
@@ -262,7 +262,7 @@ Base allows you to define the base directory on your local file system in which 
 ```
 const AlexServer = require('audio-level-executing-xhr/server');
 const alex = new AlexClient({
-	base: '[A]/[LOCAL]/[PATH]/'
+  base: '[A]/[LOCAL]/[PATH]/'
 }, [commands]);
 ```
 
@@ -270,7 +270,7 @@ To disable baseline find feature all toghether, set the find prop to false. Usef
 ```
 const AlexServer = require('audio-level-executing-xhr/server');
 const alex = new AlexClient({
-	find: false
+  find: false
 }, [commands]);
 ```
 
@@ -285,7 +285,7 @@ Base allows you to define the base directory on your local file system in which 
 ```
 const AlexServer = require('audio-level-executing-xhr/server');
 const alex = new AlexClient({
-	base: '[A]/[LOCAL]/[PATH]/'
+  base: '[A]/[LOCAL]/[PATH]/'
 }, [commands]);
 ```
 
@@ -293,7 +293,7 @@ To disable baseline open feature, set the `open:` prop to false. Useful when wan
 ```
 const AlexServer = require('audio-level-executing-xhr/server');
 const alex = new AlexClient({
-	open: false
+  open: false
 }, [commands]);
 ```
 
