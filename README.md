@@ -62,7 +62,7 @@ onMatch: () => {
 }
 ```
 
-### run(command, input, callback)
+## run(command, input, callback)
 Dispatch a request to server to run a specific server side command.
 
 | Prop | Type | Description |
@@ -79,7 +79,7 @@ onMatch: () => {
 }
 ```
 
-### ask(string, callback(answer), options)
+## ask(string, callback(answer), options)
 Allows alex a way to asking for more details, to then proceed on with further operations using user's answer.
 
 | Prop | Type | Description |
@@ -124,7 +124,7 @@ onMatch: () => {
 }
 ```
 
-### find(input, callback, options)
+## find(input, callback, options)
 Allows alex to find a string across file system, tell you how many matches / files found and if you would like to open / edit the files.
 This method is a rolled up method that is essentially a `alex.ask`, so the same options can be passed in a find.
 
@@ -142,7 +142,7 @@ onMatch: (input) => {
 }
 ```
 
-### open(input, callback, options)
+## open(input, callback, options)
 Allows alex to open files into their default application by simply saying `filename dot extension`.
 
 | Prop | Type | Description |
@@ -166,7 +166,7 @@ onMatch: (input) => {
 }
 ```
 
-### search(input, callback, options)
+## search(input, callback, options)
 Allows alex to search the web and open the results page up in a new browser tab.
 
 | Prop | Type | Description |
