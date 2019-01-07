@@ -239,7 +239,7 @@ onMatch: (input) => {
 
 ```javascript
 onMatch: (input) => {
-  alex.open(input, () => {
+  alex.searc(input, () => {
     console.log('server side is done opening found file.')
   }, {
     engine: '//www.duckduckgo.com/'
@@ -282,10 +282,6 @@ const alex = new AlexClient({
 }, [commands]);
 ```
 
-
-
-
-
 ## Web Search
 Although alex has exposed it's `search` method as API, alex comes with a web search feature built in.
 
@@ -309,10 +305,6 @@ const alex = new AlexClient({
   search: false
 }, [commands]);
 ```
-
-
-
-
 
 ## Find
 Although alex has exposed it's `find` method as API, alex comes with system level "find in files" feature built in.
