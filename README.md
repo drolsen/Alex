@@ -2,7 +2,7 @@
 
 (audio level executing xhr)
 
-A browser based voice assistant that can verbally do system level tasks and text to speech feedback.
+A browser based voice assistant that can verbally do system level tasks with text-to-speech feedback.
 
 The beauty of Alex is within ease of authoring complex verbal relationships between client side input, server side tasks and text-to-speech feedback to capture the full user experience of a voice assistant.
 
@@ -42,7 +42,9 @@ scripts: {
 ```
 
 # Structure
-While commands you configure on client side are fundamentally different, the configuration structure for both client side and server side is consistent. Please note however, some configuration options may apply to only client or server side so please read the features documentation carefully below.
+While rules and methods you configure on client/server side of alex are fundamentally different, the configuration structure for both remains consistent. 
+
+**Note**: Some configuration options may apply to only client or server side so please read the features documentation carefully below.
 
 #Rules
 In the above examples we define an array of objects called rules as the second argument in our class setup. 
